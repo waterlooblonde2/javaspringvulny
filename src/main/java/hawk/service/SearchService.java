@@ -55,20 +55,18 @@ public class SearchService {
         return items;
     }
 
-    public List<Item> anotherSearch(Search search) {
+    public List<Item> goodSearch(Search search) {
         final Session session = (Session) entityManager.unwrap(Session.class);
         List items = session.doReturningWork(new ReturningWork<List<Item>>() {
             @Override
             public List<Item> execute(Connection connection) throws SQLException {
                 List<Item> items = new ArrayList<>();
-                // The wrong way
-                String query = "select id, name, description from ITEM where description like '%" +
-                        search.getSearchText() + "%'";
 
-                LOGGER.log(Level.INFO, "SQL Query " + query);
-                ResultSet rs = connection
-                        .createStatement()
-                        .executeQuery(query);
+                String query = "select id, name, description from ITEM where description like ?";
+                PreparedStatement statement = connection.prepareStatement(query);
+                statement.setString(1, "%" + search.getSearchText() + "%");
+                LOGGER.log(Level.INFO, "SQL Query " + statement);
+                ResultSet rs = statement.executeQuery();
 
                 while (rs.next()) {
                     items.add(new Item(rs.getLong("id"), rs.getString("name"), rs.getString("description")));
