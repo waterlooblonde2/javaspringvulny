@@ -41,5 +41,22 @@ public class SearchController {
         model.addAttribute("title", "Search");
         return "search";
     }
+    
+    @PostMapping("/search2")
+    public String searchSubmit2(@ModelAttribute Search search, Model model) {
+        List<Item> items = searchService.search(search);
+        model.addAttribute("items", items);
+        model.addAttribute("search", search);
+        model.addAttribute("title", "Search");
+        return "search";
+    }
 
+    @PostMapping("/anotherSearch")
+    public String anotherSearchSubmit(@ModelAttribute Search search, Model model) {
+        List<Item> items = searchService.anotherSearch(search);
+        model.addAttribute("items", items);
+        model.addAttribute("search", search);
+        model.addAttribute("title", "Search");
+        return "search";
+    }
 }
