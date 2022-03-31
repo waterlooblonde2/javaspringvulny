@@ -77,7 +77,7 @@ public class SearchService {
         return items;
     }
    
-    public List<Item> anotherSearch(Search search) {
+    public List<Item> badSearch(Search search) {
         final Session session = (Session) entityManager.unwrap(Session.class);
         List items = session.doReturningWork(new ReturningWork<List<Item>>() {
             @Override
