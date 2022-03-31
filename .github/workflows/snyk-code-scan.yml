@@ -26,7 +26,7 @@ jobs:
     # Run Snyk Code
     - name: Run Snyk Code
       run: |
-         snyk code test -d --org=53170fa7-ae4d-464c-8fab-a2b8197bda0b --sarif  > results.sarif 
+         snyk code test -d --org=53170fa7-ae4d-464c-8fab-a2b8197bda0b --sarif-file-output=results.sarif 
       continue-on-error: true
     - name: Upload SARIF file
       uses: github/codeql-action/upload-sarif@v1
