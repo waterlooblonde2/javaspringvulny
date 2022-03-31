@@ -147,6 +147,22 @@ public class MultiHttpSecurityConfig {
         }
     }
 
+     @Configuration
+    @Order(5)
+    public static class BasicAuthWebSecurityConfigurerAdapterNew extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .antMatcher("/api/basic/**")
+                    .csrf().disable()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                    .authorizeRequests().anyRequest().authenticated()
+                .and()
+                    .httpBasic();
+        }
+    }
+
     @Bean
     public UserDetailsService userDetailsService() {
         UserDetails user =
